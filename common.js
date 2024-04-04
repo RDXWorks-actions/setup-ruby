@@ -169,6 +169,8 @@ const GitHubHostedPlatforms = [
   'macos-12-x64',
   'macos-13-x64',
   'macos-13-arm64',
+  'macos-14-x64',
+  'macos-14-arm64',
   'windows-2019-x64',
   'windows-2022-x64',
 ]
@@ -341,7 +343,8 @@ export function setupPath(newPathEntries) {
 
   // Then add new path entries using core.addPath()
   let newPath
-  if (windows) {
+  const windowsToolchain = core.getInput('windows-toolchain')
+  if (windows && windowsToolchain !== 'none') {
     // main Ruby dll determines whether mingw or ucrt build
     msys2Type = rubyIsUCRT(newPathEntries[0]) ? 'ucrt64' : 'mingw64'
 

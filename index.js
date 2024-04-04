@@ -17,6 +17,7 @@ const inputDefaults = {
   'working-directory': '.',
   'cache-version': bundler.DEFAULT_CACHE_VERSION,
   'self-hosted': 'false',
+  'windows-toolchain': 'default',
 }
 
 // entry point when this action is run on its own
@@ -78,7 +79,7 @@ export async function setupRuby(options = {}) {
   const rubygemsInputSet = inputs['rubygems'] !== 'default'
   if (rubygemsInputSet) {
     await common.measure('Updating RubyGems', async () =>
-      rubygems.rubygemsUpdate(inputs['rubygems'], rubyPrefix))
+      rubygems.rubygemsUpdate(inputs['rubygems'], rubyPrefix, platform, engine, version))
   }
 
   // When setup-ruby is used by other actions, this allows code in them to run
